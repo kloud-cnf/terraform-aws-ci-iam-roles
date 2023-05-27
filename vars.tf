@@ -1,15 +1,15 @@
 variable "platform" {
- type =  string
- description = "Target CI platform for which the `var.roles` will configure a trust relationship for"
+  type        = string
+  description = "Target CI platform for module instantiation for which the `var.roles` will configure a trust relationship for"
 
- validation {
-   condition = contains(["github", "gitlab"], var.platform)
-   error_message = "${var.platform} platform not supported. Must be `github` or `gitlab`"
- }
+  validation {
+    condition     = contains(["github", "gitlab"], var.platform)
+    error_message = "${var.platform} platform not supported. Must be `github` or `gitlab`"
+  }
 }
 
 variable "roles" {
-  description = "IAM Roles to provision, with permissions and trusted projects paths & refs"
+  description = "IAM Roles to provision with permissions and trusted projects paths & refs via"
   type = list(object({
     name_suffix = string
     trusted_projects_refs = list(object({
@@ -37,6 +37,6 @@ variable "roles" {
 
   validation {
     condition     = alltrue(flatten([for role in var.roles : [for project in role.trusted_projects_refs : length(project.branches) + length(project.tags) > 0]]))
-    error_message = "At least one of `branches` or `tags` must be specified for every trusted project for a role."
+    error_message = "At least one of `branch` or `tags` must be specified for every trsted project for a role. `*` are acceptable wildcards"
   }
 }
