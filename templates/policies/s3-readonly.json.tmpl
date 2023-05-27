@@ -1,0 +1,25 @@
+[
+  {
+      "Sid": "ReadBucketObjects",
+      "Effect": "Allow",
+      "Action": [
+          "s3:GetBucketLocation",
+          "s3:GetObject",
+          "s3:GetObjectAcl",
+          "s3:GetObjectRetention",
+          "s3:GetObjectTagging",
+          "s3:GetObjectVersion",
+          "s3:GetObjectVersionAcl",
+          "s3:GetObjectVersionForReplication",
+          "s3:GetObjectVersionTagging",
+          "s3:ListBucket",
+          "s3:ListBucketVersions",
+          "s3:ListBucketMultiPartUploads"
+      ],
+      "Resource": [
+        ${join(",", formatlist("\"arn:aws:s3:::%s\"", distinct([for k in paths : split("/", k)[0]])))},
+        ${join(",", formatlist("\"arn:aws:s3:::%s\"", paths ))}
+      ]
+  }
+]
+
