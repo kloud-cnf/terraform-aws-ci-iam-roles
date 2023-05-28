@@ -1,12 +1,12 @@
 locals {
   roles            = { for role in var.roles : "${var.platform}-ci-${role.name_suffix}" => role }
   managed_policies = toset(flatten([for _, role in local.roles : role.managed_policies]))
-  managed_policy_attachments = { for combo in flatten([for role_name, role in local.roles : [
+  managed_policy_attachments = { for attachment in flatten([for role_name, role in local.roles : [
     for policy in role.managed_policies : {
       key         = join("_", [role_name, policy])
       role_name   = role_name
       policy_name = policy
-    }]]) : combo.key => combo
+    }]]) : attachment.key => attachment
   }
 
   # Merge interface inline polices + templated json polices
