@@ -35,12 +35,29 @@ locals {
   // TODO support custom domains via inputs
   oidc_provider_domain = var.platform == "github" ? "token.actions.githubusercontent.com" : "gitlab.com"
 
-  provider_schema = {
+  // For each role, format trusted refrences for supported platform
+  platform_formatted_trusted_refs = {
+    // Github -> https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect#example-subject-claims
+    // repo:<orgName/repoName>:ref:refs/heads/<branchName>  -> https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect#filtering-for-a-specific-branch
+    // repo:<orgName/repoName>:ref:refs/tags/<tagName>      -> https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect#filtering-for-a-specific-tag
+    // repo:<orgName/repoName>:pull_request                 -> https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect#filtering-for-pull_request-events
     github = {
-      subkey = "repo" # https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services#configuring-the-role-and-trust-policy
+      for k, v in local.roles : k => flatten([for project in v.trusted_projects_refs : [
+        [for path in project.paths : format("repo:%s:pull_request", path) if project.pull_request],
+        [for combo in setproduct(project.paths, project.branches) : format("repo:%s:ref:refs/heads/%s", combo[0], combo[1])],
+        [for combo in setproduct(project.paths, project.tags) : format("repo:%s:ref:refs/tags/%s", combo[0], combo[1])],
+      ]])
     }
+
+    // Gitlab -> https://docs.gitlab.com/ee/ci/cloud_services/index.html#configure-a-conditional-role-with-oidc-claims
+    // project_path:{group}/{project}:ref_type:{type}:ref:{branch_name||tag_name}
+    // project_path:mygroup/myproject:ref_type:branch:ref:main
+    // project_path:mygroup/myproject:ref_type:tag:ref:v1.0.0
     gitlab = {
-      subkey = "project_path" # https://docs.gitlab.com/ee/ci/cloud_services/aws/#configure-a-role-and-trust
+      for k, v in local.roles : k => flatten([for project in v.trusted_projects_refs : [
+        [for combo in setproduct(project.paths, project.branches) : format("project_path:%s:ref_type:branch:ref:%s", combo[0], combo[1])],
+        [for combo in setproduct(project.paths, project.tags) : format("project_path:%s:ref_type:tag:ref:%s", combo[0], combo[1])],
+      ]])
     }
   }
 }

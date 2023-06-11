@@ -12,9 +12,10 @@ variable "roles" {
   type = set(object({
     name_suffix = string
     trusted_projects_refs = set(object({
-      paths    = set(string)
-      branches = optional(set(string), [])
-      tags     = optional(set(string), [])
+      paths        = set(string)
+      branches     = optional(set(string), [])
+      tags         = optional(set(string), [])
+      pull_request = optional(bool, true) # Allow role to be assumed on PR event, defaults to true, only needed for GitHub
     }))
     managed_policies = optional(set(string), [])
     policy_statements = optional(set(object({

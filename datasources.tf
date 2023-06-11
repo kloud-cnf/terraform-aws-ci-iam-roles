@@ -47,10 +47,7 @@ data "aws_iam_policy_document" "trust_policy" {
     condition {
       test     = "StringLike"
       variable = "${local.oidc_provider_domain}:sub"
-      values = flatten([for project in each.value.trusted_projects_refs : [
-        [for combo in setproduct(project.paths, project.branches) : format("${local.provider_schema[var.platform].subkey}:%s:ref_type:branch:ref:%s", combo[0], combo[1])],
-        [for combo in setproduct(project.paths, project.tags) : format("${local.provider_schema[var.platform].subkey}:%s:ref_type:tag:ref:%s", combo[0], combo[1])],
-      ]])
+      values   = local.platform_formatted_trusted_refs[var.platform][each.key]
     }
   }
 }

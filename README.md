@@ -118,13 +118,13 @@ inputs = {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.4 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 4.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.67.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.0.1 |
 
 ## Modules
 
@@ -147,7 +147,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_platform"></a> [platform](#input\_platform) | Target CI platform for module instantiation for which the `var.roles` will configure a trust relationship for | `string` | n/a | yes |
-| <a name="input_roles"></a> [roles](#input\_roles) | IAM Roles to provision with permissions and trusted projects paths & refs | <pre>set(object({<br>    name_suffix = string<br>    trusted_projects_refs = set(object({<br>      paths    = set(string)<br>      branches = optional(set(string), [])<br>      tags     = optional(set(string), [])<br>    }))<br>    managed_policies = optional(set(string), [])<br>    policy_statements = optional(set(object({<br>      sid       = optional(string)<br>      effect    = string<br>      actions   = set(string)<br>      resources = set(string)<br>      conditions = optional(set(object({<br>        test     = string<br>        variable = string<br>        values   = set(string)<br>      })), [])<br>    })), [])<br>    templated_policy_statements = optional(set(object({<br>      template = string<br>      values   = optional(map(set(string)), {})<br>    })), [])<br>  }))</pre> | n/a | yes |
+| <a name="input_roles"></a> [roles](#input\_roles) | IAM Roles to provision with permissions and trusted projects paths & refs | <pre>set(object({<br>    name_suffix = string<br>    trusted_projects_refs = set(object({<br>      paths        = set(string)<br>      branches     = optional(set(string), [])<br>      tags         = optional(set(string), [])<br>      pull_request = optional(bool, true) # Allow role to be assumed on PR event, defaults to true, only needed for GitHub<br>    }))<br>    managed_policies = optional(set(string), [])<br>    policy_statements = optional(set(object({<br>      sid       = optional(string)<br>      effect    = string<br>      actions   = set(string)<br>      resources = set(string)<br>      conditions = optional(set(object({<br>        test     = string<br>        variable = string<br>        values   = set(string)<br>      })), [])<br>    })), [])<br>    templated_policy_statements = optional(set(object({<br>      template = string<br>      values   = optional(map(set(string)), {})<br>    })), [])<br>  }))</pre> | n/a | yes |
 
 ## Outputs
 
