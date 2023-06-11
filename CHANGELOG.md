@@ -1,3 +1,10 @@
+# [0.2.0](https://github.com/kloud-cnf/terraform-aws-ci-iam-roles/compare/v0.1.0...v0.2.0) (2023-06-11)
+
+
+### Features
+
+* **iam:** support pull request event for roles created on github ([c0c3dc6](https://github.com/kloud-cnf/terraform-aws-ci-iam-roles/commit/c0c3dc67dc5cc3e225a46bf66743160199755030))
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ## Contents
