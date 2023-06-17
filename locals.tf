@@ -9,6 +9,10 @@ locals {
     }]]) : attachment.key => attachment
   }
 
+  template_file_defaults = {
+    aws_account_id = data.aws_caller_identity.current.account_id
+  }
+
   # Merge interface inline polices + templated json polices
   inline_policies = { for role_name, role in local.roles : role_name => flatten([
     [for statement in role.policy_statements : {
@@ -18,7 +22,10 @@ locals {
       resources  = flatten(statement.resources)
       conditions = flatten(statement.conditions)
     }],
-    [for _, template_values in role.templated_policy_statements : [for statement in jsondecode(templatefile("${path.module}/templates/policies/${template_values.template}.json.tmpl", template_values.values)) :
+    [for _, template_values in role.templated_policy_statements : [for statement in jsondecode(templatefile("${path.module}/templates/policies/${template_values.template}.json.tmpl", merge(
+      local.template_file_defaults,
+      try(template_values.values, {})
+      ))) :
       {
         sid       = lookup(statement, "Sid", null)
         effect    = title(statement.Effect)
@@ -27,7 +34,7 @@ locals {
         conditions = flatten([for test, condition in lookup(statement, "Condition", {}) : [for k, v in condition : {
           test     = test
           variable = k
-          values   = v
+          values   = tolist([v])
         }]])
     }]]
   ]) if length(role.policy_statements) + length(role.templated_policy_statements) > 0 }

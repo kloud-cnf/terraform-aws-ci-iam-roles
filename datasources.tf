@@ -1,3 +1,5 @@
+data "aws_caller_identity" "current" {}
+
 data "aws_iam_policy_document" "ci_inline_policy" {
   for_each = local.inline_policies
 
@@ -36,8 +38,8 @@ data "aws_iam_policy_document" "trust_policy" {
   for_each = local.roles
 
   statement {
-    actions = ["sts:AssumeRoleWithWebIdentity"]
     sid     = "TrustPolicy"
+    actions = ["sts:AssumeRoleWithWebIdentity"]
 
     principals {
       type        = "Federated"
@@ -49,5 +51,28 @@ data "aws_iam_policy_document" "trust_policy" {
       variable = "${local.oidc_provider_domain}:sub"
       values   = local.platform_formatted_trusted_refs[var.platform][each.key]
     }
+  }
+}
+
+data "aws_iam_policy_document" "ci_permission_boundary" {
+  statement {
+    sid = "CIRunnerPermissionsBoundary"
+
+    actions = [
+      "s3:PutObject",
+      "s3:GetObject",
+      "logs:PutLogEvents",
+      "logs:CreateLogGroup",
+      "logs:CreateLogStream",
+      "logs:PutLogEvents",
+      "ec2:CreateNetworkInterface",
+      "ec2:DescribeNetworkInterfaces",
+      "ec2:DeleteNetworkInterface",
+      "ec2:AssignPrivateIpAddresses",
+      "ec2:UnassignPrivateIpAddresses",
+      "ssm:GetParameter*"
+    ]
+
+    resources = ["*"]
   }
 }

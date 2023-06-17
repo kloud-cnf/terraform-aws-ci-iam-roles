@@ -1,0 +1,17 @@
+[
+  {
+    "Sid": "WriteBucketObjects",
+    "Effect": "Allow",
+    "Action": [
+      "s3:PutObject",
+      "s3:PutObjectAcl",
+      "s3:PutObjectRetention",
+      "s3:PutObjectTagging",
+      "s3:DeleteObject"
+    ],
+    "Resource": [
+      ${join(",", formatlist("\"arn:aws:s3:::%s/*\"", distinct([for k in paths : split("/", k)[0]])))},
+      ${join(",", formatlist("\"arn:aws:s3:::%s\"", paths ))}
+    ]
+  }
+]
