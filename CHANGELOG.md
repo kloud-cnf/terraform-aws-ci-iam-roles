@@ -1,3 +1,10 @@
+## [0.2.3](https://github.com/kloud-cnf/terraform-aws-ci-iam-roles/compare/v0.2.2...v0.2.3) (2023-06-17)
+
+
+### Bug Fixes
+
+* **iam, ci:** give ci-provisoner dynamodb perms ([6c6abfe](https://github.com/kloud-cnf/terraform-aws-ci-iam-roles/commit/6c6abfeb12b6a5bd69518522c63b1739b9bc5c9c))
+
 ## [0.2.2](https://github.com/kloud-cnf/terraform-aws-ci-iam-roles/compare/v0.2.1...v0.2.2) (2023-06-17)
 
 
