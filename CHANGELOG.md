@@ -1,3 +1,10 @@
+## [0.3.1](https://github.com/kloud-cnf/terraform-aws-ci-iam-roles/compare/v0.3.0...v0.3.1) (2023-06-17)
+
+
+### Bug Fixes
+
+* **ci, policy:** fix template formatting ([e390f3f](https://github.com/kloud-cnf/terraform-aws-ci-iam-roles/commit/e390f3f4e589499cff15a4a3bc120f367f75c061))
+
 # [0.3.0](https://github.com/kloud-cnf/terraform-aws-ci-iam-roles/compare/v0.2.3...v0.3.0) (2023-06-17)
 
 
