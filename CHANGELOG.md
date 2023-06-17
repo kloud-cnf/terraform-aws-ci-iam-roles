@@ -1,3 +1,10 @@
+# [0.3.0](https://github.com/kloud-cnf/terraform-aws-ci-iam-roles/compare/v0.2.3...v0.3.0) (2023-06-17)
+
+
+### Features
+
+* **iam, ci:** add org:* permission to ci policy ([0878c6e](https://github.com/kloud-cnf/terraform-aws-ci-iam-roles/commit/0878c6ea251e9fc47c1fad5084a0db69c2b732bb))
+
 ## [0.2.3](https://github.com/kloud-cnf/terraform-aws-ci-iam-roles/compare/v0.2.2...v0.2.3) (2023-06-17)
 
 
