@@ -1,3 +1,10 @@
+## [0.2.1](https://github.com/kloud-cnf/terraform-aws-ci-iam-roles/compare/v0.2.0...v0.2.1) (2023-06-17)
+
+
+### Bug Fixes
+
+* **iam, ci:** templated support for 'ci_admin' provisoner role with permission boundary ([3900962](https://github.com/kloud-cnf/terraform-aws-ci-iam-roles/commit/3900962b5472be05f92fae77ba3c3a1a53e7dab6))
+
 # [0.2.0](https://github.com/kloud-cnf/terraform-aws-ci-iam-roles/compare/v0.1.0...v0.2.0) (2023-06-11)
 
 
