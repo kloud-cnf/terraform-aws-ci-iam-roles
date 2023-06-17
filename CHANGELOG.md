@@ -1,3 +1,10 @@
+## [0.2.2](https://github.com/kloud-cnf/terraform-aws-ci-iam-roles/compare/v0.2.1...v0.2.2) (2023-06-17)
+
+
+### Bug Fixes
+
+* **iam:** remove path from CI permission boundy policy ([4d0d178](https://github.com/kloud-cnf/terraform-aws-ci-iam-roles/commit/4d0d178626b75d23edcc553083a29c03222bc65b))
+
 ## [0.2.1](https://github.com/kloud-cnf/terraform-aws-ci-iam-roles/compare/v0.2.0...v0.2.1) (2023-06-17)
 
 
