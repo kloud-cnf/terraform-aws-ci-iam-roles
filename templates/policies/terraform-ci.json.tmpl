@@ -11,7 +11,9 @@
 			"logs:*",
 			"lambda:*",
 			"ec2:*",
-			"ecs:*"
+			"ecs:*",
+			"secretsmanager:*",
+			"ssm:*"
 		],
 		"Resource": ["*"]
 	},
@@ -29,7 +31,7 @@
 			"iam:PutRolePolicy",
 			"iam:DeleteRolePolicy"
 		],
-		"Resource": ["arn:aws:iam::${aws_account_id}:role/application-roles/*"],
+		"Resource": ["arn:aws:iam::${aws_account_id}:role/*"],
 		"Condition": {
 			"ArnEquals": {
 				"iam:PermissionsBoundary": "arn:aws:iam::${aws_account_id}:policy/ci-permission-boundary"
@@ -42,7 +44,7 @@
 			"iam:AttachRolePolicy",
 			"iam:DetachRolePolicy"
 		],
-		"Resource": ["arn:aws:iam::${aws_account_id}:role/application-roles/*"],
+		"Resource": ["arn:aws:iam::${aws_account_id}:role/*"],
 		"Condition": {
 			"ArnEquals": {
 				"iam:PermissionsBoundary": "arn:aws:iam::${aws_account_id}:policy/ci-permission-boundary"
@@ -59,7 +61,7 @@
 			"iam:GetRolePolicy"
 		],
 		"Resource": [
-			"arn:aws:iam::${aws_account_id}:role/application-roles/*"
+			"arn:aws:iam::${aws_account_id}:role/*"
 		]
 	},
 	{
@@ -76,14 +78,14 @@
 			"iam:ListPolicyVersions"
 		],
 		"Resource": [
-			"arn:aws:iam::${aws_account_id}:policy/application-role-policies/*"
+			"arn:aws:iam::${aws_account_id}:policy/*"
 		]
 	},
 	{
 		"Effect": "Allow",
 		"Action": "iam:PassRole",
 		"Resource": [
-			"arn:aws:iam::${aws_account_id}:role/application-roles/*"
+			"arn:aws:iam::${aws_account_id}:role/*"
 		]
 	},
 	{
@@ -93,10 +95,14 @@
 	},
 	{
 		"Effect": "Allow",
+		"Action": "iam:CreateServiceLinkedRole",
+		"Resource": ["arn:aws:iam::${aws_account_id}:role/aws-service-role/*"]
+	},
+	{
+		"Effect": "Allow",
 		"Action": "iam:GetRole",
 		"Resource": [
-			"arn:aws:iam::${aws_account_id}:role/application-roles/*",
-			"arn:aws:iam::${aws_account_id}:role/aws-service-role/*"
+			"arn:aws:iam::${aws_account_id}:role/*"
 		]
 	}
 ]

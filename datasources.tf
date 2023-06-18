@@ -56,7 +56,7 @@ data "aws_iam_policy_document" "trust_policy" {
 
 data "aws_iam_policy_document" "ci_permission_boundary" {
   statement {
-    sid = "CIRunnerPermissionsBoundary"
+    sid = "CIPermissionsBoundary"
 
     actions = [
       "s3:PutObject",
