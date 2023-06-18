@@ -1,3 +1,10 @@
+## [0.3.2](https://github.com/kloud-cnf/terraform-aws-ci-iam-roles/compare/v0.3.1...v0.3.2) (2023-06-18)
+
+
+### Bug Fixes
+
+* **iam:** add ssm+secretsmanager+createServiceRole permissions to ci policy ([a75cbee](https://github.com/kloud-cnf/terraform-aws-ci-iam-roles/commit/a75cbee92e06c1d6ca934550d029fbba5caf5144))
+
 ## [0.3.1](https://github.com/kloud-cnf/terraform-aws-ci-iam-roles/compare/v0.3.0...v0.3.1) (2023-06-17)
 
 
